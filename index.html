@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bit codeu contabilidad</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   
+    <div class="login-container">
+
+        <div id="buttons"> 
+            <img src="BDU.png" width="400px" class="img" >
+          
+        </div>
+       
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email"></label>
+                <input type="email" id="email" name="email" placeholder="Usuario" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password"></label>
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+            
+            <button type="submit" class="btn">Ingresar al Sistema...</button>
+            
+            <div class="form-footer">
+                <p>¿No tienes una cuenta? <a href="register.html">Regístrate aquí</a></p>
+                <p><a href="#" id="forgotPassword"></a></p>
+            </div>
+        </form>
+    </div>
+    
+    <script src="auth.js"></script>
+    <style>
+       * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    font-family: Arial,sans-serif;
+    background:transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+
+#buttons{
+    float: center;
+    margin-right: 12px;
+}
+
+
+
+.login-container,.dashboard-container {
+    backdrop-filter: blur(5px);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 470px;
+    background:#3498db;;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  
+}
+
+
+
+
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+   color: #ffffff ;
+    background:transparent;
+}
+
+input {
+    width: 60%;
+    padding: 0.19rem;
+    border: 1px solid #af9d9d ;
+   background-color: #ffffff;
+    color:#ffffff;
+    margin: 0 auto;
+   float: center;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ffffff;
+    background: transparent;
+}
+
+input:hover{
+    background: transparent;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.btn:hover {
+    background:#ffffff;
+    color: #1ca0dd;
+    box-shadow: 0px 15px 20px rgba(255, 255, 255, 0.4)
+}
+
+.form-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #ffffff;
+}
+
+.form-footer a {
+    color: #030303;
+    text-decoration:none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+   color: #ffffff;
+   box-shadow: 0px 15px 20px rgba(243, 243, 243, 0.4)
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    height: 1rem;
+   }
+
+.password-strength {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: #ffffff;
+}
+
+#strengthMeter {
+    color: #ffffff;
+    font-weight: bold;
+} 
+    </style>
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Verificar si estamos en la página de login
+    if (document.getElementById('loginForm')) {
+        const loginForm = document.getElementById('loginForm');
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Validación simple
+            if (!validateEmail(email)) {
+                document.getElementById('emailError').textContent = 'Por favor ingresa un email válido';
+                return;
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+            
+            if (password.length < 6) {
+                document.getElementById('passwordError').textContent = 'La contraseña debe tener al menos 6 caracteres';
+                return;
+            } else {
+                document.getElementById('passwordError').textContent = '';
+            }
+            
+            // Obtener usuarios del localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Guardar sesión
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Email o contraseña incorrectos');
+            }
+        });
+    }
+    
+    // Verificar si estamos en la página de registro
+    if (document.getElementById('registerForm')) {
+        const registerForm = document.getElementById('registerForm');
+        const regPassword = document.getElementById('regPassword');
+        const strengthText = document.getElementById('strengthText');
+        const strengthMeter = document.getElementById('strengthMeter');
+        
+        regPassword.addEventListener('input', function() {
+            const strength = checkPasswordStrength(regPassword.value);
+            strengthMeter.textContent = strength.text;
+            strengthMeter.style.color = strength.color;
+        });
+        
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            
+            // Validaciones
+            if (!validateEmail(email)) {
+                document.getElementById('regEmailError').textContent = 'Por favor ingresa un email válido';
+                return;
+            } else {
+                document.getElementById('regEmailError').textContent = '';
+            }
+            
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Las contraseñas no coinciden';
+                return;
+            } else {
+                document.getElementById('confirmPasswordError').textContent = '';
+            }
+            
+            if (password.length < 6) {
+                alert('La contraseña debe tener al menos 6 caracteres');
+                return;
+            }
+            
+            // Obtener usuarios del localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Verificar si el usuario ya existe
+            if (users.some(u => u.email === email)) {
+                document.getElementById('regEmailError').textContent = 'Este email ya está registrado';
+                return;
+            }
+            
+            // Agregar nuevo usuario
+            const newUser = {
+                name,
+                email,
+                password // En una aplicación real, NUNCA guardes contraseñas en texto plano
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Iniciar sesión automáticamente
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            window.location.href = 'dashboard.html';
+        });
+    }
+    
+    // Verificar si estamos en el dashboard
+    if (document.getElementById('userName')) {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        if (!currentUser) {
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        document.getElementById('userName').textContent = currentUser.name;
+        
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'dashboard.html';
+        });
+    }
+    
+    // Función para validar email
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+    
+    // Función para medir fortaleza de contraseña
+    function checkPasswordStrength(password) {
+        // Verificar longitud
+        if (password.length === 0) {
+            return { text: '', color: 'black' };
+        } else if (password.length < 6) {
+            return { text: 'Débil', color:'#2ecc71'};
+        }
+        
+        // Verificar complejidad
+        const hasLetters = /[a-zA-Z]/.test(password);
+        const hasNumbers = /[0-9]/.test(password);
+        const hasSpecial = /[^a-zA-Z0-9]/.test(password);
+        
+        let strength = 0;
+        if (hasLetters) strength++;
+        if (hasNumbers) strength++;
+        if (hasSpecial) strength++;
+        
+        if (strength === 1) {
+            return { text: 'Débil', color: '#2ecc71' };
+        } else if (strength === 2) {
+            return { text: 'Moderada', color: '#f39c12' };
+        } else {
+            return { text: 'Fuerte', color: 'rgb(36, 13, 247)' };
+        }
+    }
+});
+   </script>
+</body>
+</html>
+

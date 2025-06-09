@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bit codeu contabilidad</title>
+    
+</head>
+<tbody>
+    <div class="login-container">
+        <h1>REGISTRARSE</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="regName"></label>
+                <input type="text" id="regName" name="name" placeholder="ID usuario" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="regEmail"></label>
+                <input type="Email" id="regEmail" name="email" placeholder="Correo Electrónico" required>
+                <div class="error-message" id="regEmailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="regPassword"></label>
+                <input type="password" id="regPassword" name="password" placeholder="Contraseña" required>
+                <div class="password-strength">
+                    <span id="strengthText">Seguridad: </span>
+                    <span id="strengthMeter"></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="regConfirmPassword"></label>
+                <input type="password" id="regConfirmPassword" name="confirmPassword" placeholder="Confirmar contraseña" required>
+                <div class="error-message" id="confirmPasswordError"></div>
+            </div>
+            
+            <button type="submit" class="btn">Registrarse</button>
+            
+            <div class="form-footer">
+                <p>¿No tienes una cuenta? <a href="index.html">Registrar usuario</a></p>
+            </div>
+        </form>
+    </div>
+    
+    <script src="auth.js"></script>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    font-family: Arial,sans-serif;
+    background: url(https://4kwallpapers.com/images/walls/thumbs_3t/3773.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+
+.login-container,.dashboard-container {
+    
+    backdrop-filter: blur(5px);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 400px;
+    background:rgba(255, 255, 255, 0.1) ;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+
+h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #3d96d1 ;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+   color: #ffffff ;
+    background:transparent;
+}
+
+input {
+    width: 70%;
+    padding: 0.50rem;
+    border: 1px solid #af9d9d ;
+    border-radius: 4px;
+    font-size: 0.rem;
+   background-color: #ffffff;
+    color:#ffffff;
+   display: block;
+    margin: 0 auto;
+}
+
+
+input:focus {
+    outline: none;
+    border-color: #ffffff;
+    background: transparent;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;  
+}
+
+.btn:hover {
+    background:#ffffff;
+    color: #1ca0dd;
+    transform: translateY(-7px);
+    box-shadow: 0px 15px 20px rgba(56, 59, 241, 0.4)
+   
+}
+
+.form-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #ffffff;
+}
+
+.form-footer a {
+    color: #44a3e2;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    height: 1rem;
+   }
+
+.password-strength {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: #ffffff;
+    
+}
+
+#strengthMeter {
+    color: #ffffff;
+    font-weight: bold;
+}
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Verificar si estamos en la página de login
+    if (document.getElementById('loginForm')) {
+        const loginForm = document.getElementById('loginForm');
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Validación simple
+            if (!validateEmail(email)) {
+                document.getElementById('emailError').textContent = 'Por favor ingresa un email válido';
+                return;
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+            
+            if (password.length < 6) {
+                document.getElementById('passwordError').textContent = 'La contraseña debe tener al menos 6 caracteres';
+                return;
+            } else {
+                document.getElementById('passwordError').textContent = '';
+            }
+            
+            // Obtener usuarios del localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Guardar sesión
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Email o contraseña incorrectos');
+            }
+        });
+    }
+    
+    // Verificar si estamos en la página de registro
+    if (document.getElementById('registerForm')) {
+        const registerForm = document.getElementById('registerForm');
+        const regPassword = document.getElementById('regPassword');
+        const strengthText = document.getElementById('strengthText');
+        const strengthMeter = document.getElementById('strengthMeter');
+        
+        regPassword.addEventListener('input', function() {
+            const strength = checkPasswordStrength(regPassword.value);
+            strengthMeter.textContent = strength.text;
+            strengthMeter.style.color = strength.color;
+        });
+        
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            
+            // Validaciones
+            if (!validateEmail(email)) {
+                document.getElementById('regEmailError').textContent = 'Por favor ingresa un email válido';
+                return;
+            } else {
+                document.getElementById('regEmailError').textContent = '';
+            }
+            
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Las contraseñas no coinciden';
+                return;
+            } else {
+                document.getElementById('confirmPasswordError').textContent = '';
+            }
+            
+            if (password.length < 6) {
+                alert('La contraseña debe tener al menos 6 caracteres');
+                return;
+            }
+            
+            // Obtener usuarios del localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Verificar si el usuario ya existe
+            if (users.some(u => u.email === email)) {
+                document.getElementById('regEmailError').textContent = 'Este email ya está registrado';
+                return;
+            }
+            
+            // Agregar nuevo usuario
+            const newUser = {
+                name,
+                email,
+                password // En una aplicación real, NUNCA guardes contraseñas en texto plano
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Iniciar sesión automáticamente
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            window.location.href = 'dashboard.html';
+        });
+    }
+    
+    // Verificar si estamos en el dashboard
+    if (document.getElementById('userName')) {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        if (!currentUser) {
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        document.getElementById('userName').textContent = currentUser.name;
+        
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'file:///media/fuse/drivefs-4bd2ef3085bf44fd59aadc18cf5dbd68/root/Chromebook%20Wallpaper/contab/contavilida2/indexx.html';
+        });
+    }
+    
+    // Función para validar email
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+    
+    // Función para medir fortaleza de contraseña
+    function checkPasswordStrength(password) {
+        // Verificar longitud
+        if (password.length === 0) {
+            return { text: '', color: 'black' };
+        } else if (password.length < 6) {
+            return { text: 'Débil', color:'#2ecc71'};
+        }
+        
+        // Verificar complejidad
+        const hasLetters = /[a-zA-Z]/.test(password);
+        const hasNumbers = /[0-9]/.test(password);
+        const hasSpecial = /[^a-zA-Z0-9]/.test(password);
+        
+        let strength = 0;
+        if (hasLetters) strength++;
+        if (hasNumbers) strength++;
+        if (hasSpecial) strength++;
+        
+        if (strength === 1) {
+            return { text: 'Débil', color: '#2ecc71' };
+        } else if (strength === 2) {
+            return { text: 'Moderada', color: '#f39c12' };
+        } else {
+            return { text: 'segura', color: '#fff' };
+        }
+    }
+});
+    </script>
+</tbody>
+</html>
