@@ -39,12 +39,17 @@
                     </div>
                     </div>
                     </div>
-                
+                    <div>
+                        <button id="miboton" class="DN">Contabilidad</button>
+                        <button id="miBoTon" class="DN">Deudas</button>
+                        <button id="miBoton" class="DN">Cerrar sistema</button>
+                    </div>
+
                 <div class="card mt-4">
                 <div class="card-header">
                         <h5>Análisis Inteligente</h5>
                 </div>
-                <div class="card-body">
+                <div class="card-bodi">
                 <div id="analisis-contenido">
                             <p class="text-muted">El sistema analizará tus patrones de gastos e ingresos.</p>
                 </div>
@@ -66,7 +71,7 @@
                 </div>
 
                 </div>
-                <div class="card-body">
+                <div class="card-bo"car>
                             <form id="transaccion-form">
                 <div class="mb-3">
                                 <label for="tipo" class="form-label">Tipo</label>
@@ -96,9 +101,7 @@
                                 <input type="date" class="form-control" id="fecha" required>
                 </div>
                                 <button type="submit" class="btn btn-primary">Guardar Transacción</button>
-                                <button id="logoutbtN" class="btn btn-primary">Contabilidad</button>
-                                <button id="logoutbtn" class="btn btn-primary">Deudas</button>
-                                <button id="logoutbTn" class="btn btn-primary">Cerrar sistema</button>
+                                
                 </form>
                 </div>
                 
@@ -144,13 +147,16 @@
     <style>
     body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ffffff;
+    background-color: #0b2d4d;
     color: #333;
 }
+
 .container{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    background: #0b2d4d;
 }
+
 .summary-card {
     margin-bottom: 20px;
 }
@@ -158,17 +164,23 @@
 .img{
     float: right;
 }
+
 h1{
     color: #3498db;
-    background: #ffffff;
-
 }
 
 .summary-item {
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ca2a2a;
+    background: #ffffff;
+    color: #1ea6db;
+}
+
+.card-bo{
+    background: #113455;
+    color: #ffffff;
 }
 
 .summary-item:last-child {
@@ -182,12 +194,37 @@ h1{
 }
 
 .card-header {
-    background-color: #3d96d1 ;
+    background-color: #3498db; ;
     color: white;
+}
+
+.card-body{
+   background-color:#ffffff;
+   color: white;
+   backdrop-filter: blur(3px);
+   
 }
 
 h5{
     text-align: center;
+}
+
+.DN {
+  padding: 2px 5px;       /* Reduce el relleno interno */
+  font-size: 14px;        /* Tamaño de fuente más pequeño */
+  height: 24px;           /* Altura fija */
+  width: auto;            /* Ancho según contenido */
+  min-width: 60px;        /* Ancho mínimo */
+  line-height: 1;         /* Espaciado entre líneas */
+  background: #fdfdfd;
+  color: #6a6a6b;
+  border-color: #ffffff;
+}
+
+.DN:hover{
+    background: #1ea6db;
+    border-color: #1ea6db;
+    color: #ffffff;
 }
 
 .btn-primary {
@@ -196,22 +233,11 @@ h5{
 }
 
 .btn-primary:hover {
-    background-color: #28a745;
-    border-color: #28a745;
+    background-color: #1ea6db;
+    border-color: #1ea6db;
     
 }
 
-.btN{
-    background-color: #3a5a9f;
-    border-color: #3a5a9f;
-    color: #f8f9fa;
-    float: right;
- }
-
-.btN:hover{
-    background: #28a745;
-    border-color: #28a745;
-}
 
 .table th {
     background-color: #1ea6db;
@@ -219,11 +245,11 @@ h5{
 }
 
 .ingreso {
-    color: #28a745;
+    color: #ffffff;
 }
 
 .gasto {
-    color: #dc3545;
+    color: #ffffff;
 }
 
 #analisis-contenido {
