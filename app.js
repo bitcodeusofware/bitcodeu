@@ -252,22 +252,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function formatMoneda(monto) {
-        return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(monto);
+        return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'Lps' }).format(monto);
     }
 
 
-    document.getElementById('logoutbtN').addEventListener('click', function() {
-        localStorage.removeItem('currentUser');
+   
+    document.getElementById("miBoton").addEventListener("click", function() {
+        alert("esta seguro que quiere cerrar el sistema!");
+        window.location.href = 'index.html';
+    });
+    document.getElementById("miboton").addEventListener("click", function() {
         window.location.href = 'indexx.html';
     });
-
-    document.getElementById('logoutbtn').addEventListener('click', function() {
-        localStorage.removeItem('currentUser');
+    document.getElementById("miBoTon").addEventListener("click", function() {
         window.location.href = 'deuda.html';
-    });
-
-    document.getElementById('logoutbTn').addEventListener('click', function() {
-        localStorage.removeItem('currentUser');
-        window.location.href = 'cerrar.html';
     });
 });
