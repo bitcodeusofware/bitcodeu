@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,9 @@
 </head>
 <body>
     <div class="container">
+                    <button id="Deudas" class="BJ">Contabilidad</button>
+                        <button id="deudas" class="BJ">Prestamos</button>
+                        <button id="DEUDAS" class="BJ">Cerrar sistema</button>
         <img src="c.jpeg" width="80px" class="img">
         <h1>BIT CODEU DEUDAS</h1>
         
@@ -40,9 +43,7 @@
                 </div>
                 
                 <button type="submit">Agregar Deuda</button>
-                <button id="logoutbtn" class="btn">Prestamos</button>
-                <button id="logoutBtn" class="btn">Contabilidad</button>
-                <button id="logoutbTn" class="btn">Cerrar sistema</button>
+                
             </form>
         </div>
         
@@ -257,21 +258,16 @@ tr:hover {
     </style>
     <script>
 
-document.getElementById('logoutbtn').addEventListener('click', function() {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'prestamos.html';
-        });
-
-
-document.getElementById('logoutBtn').addEventListener('click', function() {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'indexx.html';
-        });
-
-        document.getElementById('logoutbTn').addEventListener('click', function() {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'cerrar.html';
-        });
+document.getElementById("DEUDAS").addEventListener("click", function() {
+        alert("esta seguro que quiere cerrar el sistema!");
+        window.location.href = 'cerrar.html';
+    });
+    document.getElementById("Deudas").addEventListener("click", function() {
+        window.location.href = 'indexx.html';
+    });
+    document.getElementById("deudas").addEventListener("click", function() {
+        window.location.href = 'prestamos.html';
+    });
 
       document.addEventListener('DOMContentLoaded', function() {
     const debtForm = document.getElementById('debt-form');
