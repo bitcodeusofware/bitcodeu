@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
    
     document.getElementById("miBoton").addEventListener("click", function() {
         alert("esta seguro que quiere cerrar el sistema!");
-        window.location.href = 'index.html';
+        window.location.href = 'cerrar.html';
     });
     document.getElementById("miboton").addEventListener("click", function() {
         window.location.href = 'indexx.html';
