@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
    
     document.getElementById("miBoton").addEventListener("click", function() {
-        alert("esta seguro que quiere cerrar el sistema!");
+        alert("Esta seguro que quieres cerrar el sistema!");
         window.location.href = 'cerrar.html';
     });
     document.getElementById("miboton").addEventListener("click", function() {
