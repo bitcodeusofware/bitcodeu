@@ -29,12 +29,24 @@
             position: relative;
             overflow: hidden;
         }
-        
+        .container:hover{
+            width: 350px;
+            backdrop-filter: blur(10px);
+            background: #fff;
+           border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #569cd6;
+        }
+
         .loading-container {
             transition: all 0.5s ease;
-            background-color: transparent;
+            background-color:transparent ;
         }
-        
+       
         .loading-bar {
             width: 100%;
             height: 27px;
@@ -100,9 +112,10 @@
         }
         
         button:hover {
-            background: linear-gradient(90deg, #569cd6, #569cd6);
+            background: linear-gradient(90deg, #f5fbff, #eaf6ff);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 5px 15px rgba(241, 231, 231, 0.3);
+            color: #569cd6;
         }
         
         .content {
